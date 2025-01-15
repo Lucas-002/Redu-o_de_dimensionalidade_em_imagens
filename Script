@@ -1,0 +1,35 @@
+import PIL
+from PIL import Image
+
+# Transformando uma imagem colorida para níveis de cinza e para binarizada
+# Executar em Jupyter Notebook
+
+def process_image(image_path, threshold=128):
+    """
+    Transforma uma imagem colorida em níveis de cinza e em preto e branco.
+
+    :param image_path: Caminho para a imagem de entrada.
+    :param threshold: Valor de limiar para binarização (padrão é 128).
+    """
+    try:
+        # Carrega a imagem
+        image = Image.open(image_path)
+
+        # Converte para níveis de cinza
+        grayscale_image = image.convert("L")
+        grayscale_image.save("lena_grayscale.png")
+        print("Imagem convertida para níveis de cinza salva como 'lena_grayscale.png'.")
+
+        # Converte para preto e branco (binarizada)
+        binary_image = grayscale_image.point(lambda x: 255 if x > threshold else 0, '1')
+        binary_image.save("lena_binary.png")
+        print("Imagem binarizada salva como 'lena_binary.png'.")
+    except Exception as e:
+        print(f"Erro ao processar a imagem: {e}")
+
+# Caminho da imagem de entrada 
+image_path = "lena.png"
+
+# Executa o processamento
+process_image(image_path)
+
